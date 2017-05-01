@@ -11,20 +11,25 @@ namespace DiceBlaster
         private static Random _r { get; set; } //γεννήτρια ζαριών
         public int[] Result { get; set; }
         public int NumberOfDices { get; private set; }
+        public int Min_range { get; private set; }
+        public int Max_range { get; private set; }
         //public char Key_Control { get; set; }
 
-        public Dice()
+
+        public Dice(int num)
         {
             if (_r == null)
             {
                 _r = new Random();
             }
-            Result = new int[2];
+            NumberOfDices = num;
+            Result = new int[NumberOfDices];
         }
 
-        public void Throw()
+        public void Throw(int min, int max)
         {
-            
+            Min_range = min;
+            Max_range = max;
             Console.WriteLine("Press Any Key:");
             //Key_Control = Console.ReadKey(true).KeyChar;
             ConsoleKeyInfo key_control = Console.ReadKey(true);
@@ -37,10 +42,18 @@ namespace DiceBlaster
                 }
                 else
                 {
-                    Result[0] = _r.Next(1, 7);
-                    Result[1] = _r.Next(1, 7);
+                    for (int i = 0; i < NumberOfDices; i++)
+                    {
+                        Result[i] = _r.Next(Min_range, Max_range);
+                    }
+
                 }
-                Console.WriteLine($"Dice One: {Result[0]} Dice Two: {Result[1]}");
+                String mesg = $"";
+                for (int i = 0; i < NumberOfDices; i++)
+                {
+                    mesg += $"Dice #{i + 1}: {Result[i]} ";
+                }
+                Console.WriteLine(mesg);
                 Console.WriteLine("Press Any Key To Continue or 'Q' to Quit :");
                 key_control = Console.ReadKey(true);
             }
@@ -64,8 +77,11 @@ namespace DiceBlaster
 
         public void DiceCheater()
         {
-            Result[0] = _r.Next(4, 7);
-            Result[1] = _r.Next(4, 7);
+            for (int i = 0; i < NumberOfDices; i++)
+            {
+                Result[i] = _r.Next((Min_range + Max_range) / 2, Max_range);
+            }
+            
         }
 
         /*public void Throw(int Number)
