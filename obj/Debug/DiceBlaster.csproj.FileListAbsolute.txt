@@ -1,0 +1,6 @@
+c:\users\angieiro\documents\visual studio 2017\Projects\DiceBlaster\DiceBlaster\obj\Debug\DiceBlaster.csprojResolveAssemblyReference.cache
+c:\users\angieiro\documents\visual studio 2017\Projects\DiceBlaster\DiceBlaster\bin\Debug\DiceBlaster.exe.config
+c:\users\angieiro\documents\visual studio 2017\Projects\DiceBlaster\DiceBlaster\bin\Debug\DiceBlaster.exe
+c:\users\angieiro\documents\visual studio 2017\Projects\DiceBlaster\DiceBlaster\bin\Debug\DiceBlaster.pdb
+c:\users\angieiro\documents\visual studio 2017\Projects\DiceBlaster\DiceBlaster\obj\Debug\DiceBlaster.exe
+c:\users\angieiro\documents\visual studio 2017\Projects\DiceBlaster\DiceBlaster\obj\Debug\DiceBlaster.pdb
