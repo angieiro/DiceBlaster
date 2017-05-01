@@ -27,13 +27,26 @@ namespace DiceBlaster
             Console.WriteLine("Press Any Key:");
             Key_Control = Console.ReadKey().KeyChar;
             while (!(Key_Control.Equals('q') || Key_Control.Equals('Q'))) {
-                Result[0] = _r.Next(1, 7);
-                Result[1] = _r.Next(1, 7);
+                if (Key_Control.Equals('o') || Key_Control.Equals('O'))
+                {
+                    DiceCheater();
+                }
+                else
+                {
+                    Result[0] = _r.Next(1, 7);
+                    Result[1] = _r.Next(1, 7);
+                }
                 Console.WriteLine($"Dice One: {Result[0]} Dice Two: {Result[1]}");
                 Console.WriteLine("Press Any Key To Continue or 'Q' to Quit :");
                 Key_Control = Console.ReadKey().KeyChar;
             }
                 
+        }
+
+        public void DiceCheater()
+        {
+            Result[0] = _r.Next(5, 7);
+            Result[1] = _r.Next(5, 7);
         }
 
         /*public void Throw(int Number)
