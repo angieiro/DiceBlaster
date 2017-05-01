@@ -11,7 +11,7 @@ namespace DiceBlaster
         private static Random _r { get; set; } //γεννήτρια ζαριών
         public int[] Result { get; set; }
         public int NumberOfDices { get; private set; }
-        public char Key_Control { get; set; }
+        //public char Key_Control { get; set; }
 
         public Dice()
         {
@@ -24,10 +24,14 @@ namespace DiceBlaster
 
         public void Throw()
         {
+            
             Console.WriteLine("Press Any Key:");
-            Key_Control = Console.ReadKey().KeyChar;
-            while (!(Key_Control.Equals('q') || Key_Control.Equals('Q'))) {
-                if (Key_Control.Equals('o') || Key_Control.Equals('O'))
+            //Key_Control = Console.ReadKey(true).KeyChar;
+            ConsoleKeyInfo key_control = Console.ReadKey(true);
+            //Console.TreatControlCAsInput = true;
+
+            while (!(key_control.KeyChar.Equals('q') || key_control.KeyChar.Equals('Q'))) {
+                if (DiceMischief(key_control))
                 {
                     DiceCheater();
                 }
@@ -38,15 +42,30 @@ namespace DiceBlaster
                 }
                 Console.WriteLine($"Dice One: {Result[0]} Dice Two: {Result[1]}");
                 Console.WriteLine("Press Any Key To Continue or 'Q' to Quit :");
-                Key_Control = Console.ReadKey().KeyChar;
+                key_control = Console.ReadKey(true);
             }
                 
         }
 
+        public bool DiceMischief(ConsoleKeyInfo k_c)
+            /*
+             * Dice Solemny Swears Is up to no Good
+             * 
+             */
+        {
+         
+            if (((k_c.Modifiers & ConsoleModifiers.Control) != 0) && (k_c.Key == ConsoleKey.O))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         public void DiceCheater()
         {
-            Result[0] = _r.Next(5, 7);
-            Result[1] = _r.Next(5, 7);
+            Result[0] = _r.Next(4, 7);
+            Result[1] = _r.Next(4, 7);
         }
 
         /*public void Throw(int Number)
