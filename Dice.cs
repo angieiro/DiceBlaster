@@ -13,6 +13,10 @@ namespace DiceBlaster
         public int NumberOfDices { get; private set; }
         public int Min_range { get; private set; }
         public int Max_range { get; private set; }
+        public int Times { get; private set; }
+        public int[] DiceNumSums { get; private set; }
+        public int TimesCheated { get; private set; }
+
         //public char Key_Control { get; set; }
 
 
@@ -24,6 +28,9 @@ namespace DiceBlaster
             }
             NumberOfDices = num;
             Result = new int[NumberOfDices];
+            Times = 0;
+            TimesCheated = 0;
+                        
         }
 
         public void Throw(int min, int max)
@@ -35,10 +42,19 @@ namespace DiceBlaster
             ConsoleKeyInfo key_control = Console.ReadKey(true);
             //Console.TreatControlCAsInput = true;
 
+            //Set CountStats to 0
+            //Αρχικοποιούμε το μονοδιάστατο πίνακα ακεραίων όπου κρατάει το άθροισμα των φορών που ήρθε κάποιος αριθμός
+            DiceNumSums = new int[Max_range];
+            for (int i = 0; i < Max_range - 1; i++) 
+            {
+                DiceNumSums[i] = 0;
+            }
+
             while (!(key_control.KeyChar.Equals('q') || key_control.KeyChar.Equals('Q'))) {
+
                 if (DiceMischief(key_control))
                 {
-                    DiceCheater();
+                    DiceCheater();                    
                 }
                 else
                 {
@@ -48,23 +64,31 @@ namespace DiceBlaster
                     }
 
                 }
+
+                Times++;
+
                 String mesg = $"";
                 for (int i = 0; i < NumberOfDices; i++)
                 {
+                    CountStats(Result[i] - 1);
                     mesg += $"Dice #{i + 1}: {Result[i]} ";
                 }
+
                 Console.WriteLine(mesg);
                 Console.WriteLine("Press Any Key To Continue or 'Q' to Quit :");
                 key_control = Console.ReadKey(true);
             }
-                
+
+            PrintStats();
+            Console.ReadKey();
+
         }
 
         public bool DiceMischief(ConsoleKeyInfo k_c)
-            /*
-             * Dice Solemny Swears Is up to no Good
-             * 
-             */
+        /*
+         * Dice Solemny Swears Is Up To No Good
+         * 
+         */
         {
          
             if (((k_c.Modifiers & ConsoleModifiers.Control) != 0) && (k_c.Key == ConsoleKey.O))
@@ -79,17 +103,29 @@ namespace DiceBlaster
         {
             for (int i = 0; i < NumberOfDices; i++)
             {
-                Result[i] = _r.Next((Min_range + Max_range) / 2, Max_range);
+                
+                Result[i] = _r.Next((int)Math.Ceiling((double)(Min_range + Max_range) / 2), Max_range);
+                
+
             }
-            
+            TimesCheated++;
         }
 
-        /*public void Throw(int Number)
+        public void PrintStats()
         {
-            for (int i = 0; i < NumberOfDices; i++)
+            String stats = "Dice Stats";
+            for (int i = 0; i < Max_range - 1; i++) 
             {
-                Result[i] = _r.Next(1, 7);
+                stats += $"Dice #{i + 1}: {(decimal)((DiceNumSums[i] / (double)Times))} ";
             }
-        }*/
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine(stats);
+            Console.WriteLine($"DiceCheater was called {TimesCheated} times.");
+        }
+        public void CountStats(int x)
+        {
+            DiceNumSums[x]++;
+        }
+       
     }
 }
