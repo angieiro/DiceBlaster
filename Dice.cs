@@ -61,11 +61,11 @@ namespace DiceBlaster
                     for (int i = 0; i < NumberOfDices; i++)
                     {
                         Result[i] = _r.Next(Min_range, Max_range);
+                        Times++;
                     }
 
                 }
 
-                Times++;
 
                 String mesg = $"";
                 for (int i = 0; i < NumberOfDices; i++)
@@ -105,7 +105,7 @@ namespace DiceBlaster
             {
                 
                 Result[i] = _r.Next((int)Math.Ceiling((double)(Min_range + Max_range) / 2), Max_range);
-                
+                Times++;
 
             }
             TimesCheated++;
